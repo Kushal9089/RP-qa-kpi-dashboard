@@ -26,7 +26,7 @@ import plotly.graph_objects as go
   #  st.title("QA KPI Dashboard Login")
 
    # password = st.text_input(
-        "Enter Password",
+      #  "Enter Password",
    #     type="password"
     #)
 
