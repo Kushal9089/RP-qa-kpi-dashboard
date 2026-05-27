@@ -1,0 +1,5 @@
+Week,Total Employees,Employees Left,Defects Detected,Defects Missed,Billable Hours,Total Hours,Completed Hours,Remaining Hours,Tests Executed,Tests Passed,Defects QA,Defects UAT,Total Test Cases,Test Cases Designed,Effective Test Cases,Committed Story Points,Completed Story Points,Planned Remaining,Actual Remaining
+Week1,1,0,4,0,168,168,168,0,84,80,4,0,84,84,80,34,34,0,0
+Week2,10,1,20,2,145,168,145,4,160,150,20,2,170,180,145,55,55,35,5
+Week3,10,0,22,1,150,168,150,3,170,165,22,1,180,190,150,60,58,20,2
+Week4,10,0,24,1,155,168,155,2,180,175,24,1,190,200,165,65,62,10,5
