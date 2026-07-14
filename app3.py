@@ -100,8 +100,10 @@ defect_leakage = (data["Defects UAT"] /
 
 execution_rate = (data["Tests Executed"] / data["Total Test Cases"]) * 100
 
-test_effectiveness = (data["Effective Test Cases"] /
-                      data["Tests Executed"]) * 100
+test_effectiveness = (
+    data["Test Cases with No Defects"] /
+    data["Tests Executed"]
+) * 100
 
 coverage = (data["Total Test Cases"] /
             data["Test Cases Designed"]) * 100
@@ -336,14 +338,16 @@ c7.plotly_chart(
     donut_chart(
         "Test Case Effectiveness",
 
-        data["Effective Test Cases"],
+        data["Test Cases with No Defects"],
 
-        data["Tests Executed"]
-        -data["Effective Test Cases"],
+        data["Test Cases Resulting in Defect Detection"],
 
-        "Effective",
+        "No Defects",
 
-        "Ineffective"
+        "Defects Found",
+
+        "#2E8B57",   # Green = No defects
+        "#DC143C"    # Red = Defects found
     ),
 
     use_container_width=True
