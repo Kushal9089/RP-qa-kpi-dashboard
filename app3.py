@@ -105,8 +105,8 @@ test_effectiveness = (
     data["Test Cases Executed"]
 ) * 100
 
-coverage = (data["Total Test Cases"] /
-            data["Test Cases Designed"]) * 100
+coverage = (data["Total Requirements covered"] /
+            data["Total Requirements"]) * 100
 
 
 # KPI cards
@@ -358,14 +358,14 @@ c8.plotly_chart(
     donut_chart(
         "Test Coverage",
 
-        data["Total Test Cases"],
+        data["Total Requirements covered"],
 
-        data["Test Cases Designed"]
-        -data["Total Test Cases"],
+        data["Total Requirements"]
+        -data["Total Requirements covered"],
 
-        "Covered",
+        "Requirements Covered",
 
-        "Remaining"
+        "Requirements Remaining"
     ),
 
     use_container_width=True
