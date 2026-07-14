@@ -102,7 +102,7 @@ execution_rate = (data["Test Cases Executed"] / data["Total Test Cases"]) * 100
 
 test_effectiveness = (
     data["Test Cases with No Defects"] /
-    data["Tests Executed"]
+    data["Test Cases Executed"]
 ) * 100
 
 coverage = (data["Total Test Cases"] /
