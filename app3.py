@@ -98,7 +98,7 @@ pass_rate = (data["Tests Passed"] / data["Tests Executed"]) * 100
 defect_leakage = (data["Defects UAT"] /
                   (data["Defects QA"] + data["Defects UAT"])) * 100
 
-execution_rate = (data["Tests Executed"] / data["Total Test Cases"]) * 100
+execution_rate = (data["Number of Test Cases Executed"] / data["Number of Test Cases in Total"]) * 100
 
 test_effectiveness = (
     data["Test Cases with No Defects"] /
@@ -374,16 +374,19 @@ c8.plotly_chart(
 c9.plotly_chart(
 
     donut_chart(
+
         "Test Execution Rate",
 
-        data["Tests Executed"],
+        data["Number of Test Cases Executed"],
 
-        data["Total Test Cases"]
-        -data["Tests Executed"],
+        data["Number of Test Cases Not Executed"],
 
-        "Executed",
+        f"Executed: {data['Number of Test Cases Executed']}",
 
-        "Pending"
+        f"Not Executed: {data['Number of Test Cases Not Executed']}",
+
+        "#2E8B57",      # Green
+        "#DC143C"       # Red
     ),
 
     use_container_width=True
