@@ -93,7 +93,7 @@ utilization = (data["Billable Hours"] / data["Total Hours"]) * 100
 productivity = (data["Completed Hours"] /
                 (data["Completed Hours"] + data["Remaining Hours"])) * 100
 
-pass_rate = (data["Tests Passed"] / data["Tests Executed"]) * 100
+pass_rate = (data["Test Cases with No Defects"] / data["Test Cases Executed"]) * 100
 
 defect_leakage = (data["Defects UAT"] /
                   (data["Defects QA"] + data["Defects UAT"])) * 100
@@ -289,10 +289,10 @@ c5.plotly_chart(
     donut_chart(
         "QA Test Pass Rate",
 
-        data["Tests Passed"],
+        data["Test Cases with No Defects"],
 
-        data["Tests Executed"]
-        - data["Tests Passed"],
+        data["Test Cases Executed"]
+        - data["Test Cases with No Defects"],
 
         "Passed",
 
