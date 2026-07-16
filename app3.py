@@ -81,6 +81,10 @@ week = st.selectbox("Select Week", df["Week"])
 
 data = df[df["Week"] == week].iloc[0]
 
+
+
+burndown_df = pd.read_csv("sprint_burndown.csv")
+
 # KPI calculations
 
 attrition = (data["Employees Left"] / data["Total Employees"]) * 100
@@ -392,38 +396,132 @@ c9.plotly_chart(
     use_container_width=True
 )
 
+# -------------------------------------------------------------
+# Sprint Velocity
+# -------------------------------------------------------------
+
 st.subheader("Sprint Velocity")
+
+# Convert Week column to Date
+df["Week"] = pd.to_datetime(
+    df["Week"],
+    format="%d-%m-%Y"
+)
+
+# Create Month column
+df["Month"] = df["Week"].dt.strftime("%B %Y")
+
+# Month Selector
+selected_month = st.selectbox(
+    "Select Month",
+    df["Month"].unique()
+)
+
+# Filter selected month
+month_df = df[
+    df["Month"] == selected_month
+].copy()
+
+# Sort by week
+month_df = month_df.sort_values("Week")
+
+# Create Week Labels
+#month_df["Week Label"] = [
+ #   f"Week {i}"
+#    for i in range(1, len(month_df) + 1)
+#]
+
+# Create display labels from dates
+month_df["Week Label"] = month_df["Week"].dt.strftime("%d-%b")
+
+# -------------------------------------------------------------
+# Create fixed Week1-Week5 structure
+# -------------------------------------------------------------
+
+# Create all week dates for the selected month
+week_labels = month_df["Week Label"].tolist()
+
+velocity_data = pd.DataFrame({
+    "Week Label": week_labels
+})
+
+velocity_data = velocity_data.merge(
+
+    month_df[
+        [
+            "Week Label",
+            "Completed Story Points",
+            "Committed Story Points"
+        ]
+    ],
+
+    on="Week Label",
+
+    how="left"
+
+)
+
+# Keep week spacing but no bars where data doesn't exist
+velocity_data = velocity_data.fillna(0)
+
+# -------------------------------------------------------------
+# Velocity Chart
+# -------------------------------------------------------------
 
 velocity_fig = go.Figure()
 
-# Completed story points
-velocity_fig.add_trace(go.Bar(
-    x=df["Week"],
-    y=df["Completed Story Points"],
-    name="Completed",
-    marker_color="#2E8B57",
+# Completed Story Points
+velocity_fig.add_trace(
 
-    text=df["Completed Story Points"],
-    textposition="outside"
-))
+    go.Bar(
 
-# Committed story points
-velocity_fig.add_trace(go.Bar(
-    x=df["Week"],
-    y=df["Committed Story Points"],
-    name="Committed",
-    marker_color="#1E90FF",
+        x=velocity_data["Week Label"],
 
-    text=df["Committed Story Points"],
-    textposition="outside"
-))
+        y=velocity_data["Completed Story Points"],
+
+        name="Completed",
+
+        marker_color="#2E8B57",
+
+        text=velocity_data["Completed Story Points"],
+
+        textposition="outside",
+
+        width=0.28
+
+    )
+
+)
+
+# Committed Story Points
+velocity_fig.add_trace(
+
+    go.Bar(
+
+        x=velocity_data["Week Label"],
+
+        y=velocity_data["Committed Story Points"],
+
+        name="Committed",
+
+        marker_color="#1E90FF",
+
+        text=velocity_data["Committed Story Points"],
+
+        textposition="outside",
+
+        width=0.28
+
+    )
+
+)
 
 velocity_fig.update_layout(
 
-    barmode='group',
+    barmode="group",
 
     title=dict(
-        text="Sprint Velocity",
+        text=f"Sprint Velocity - {selected_month}",
         x=0.5,
         xanchor="center"
     ),
@@ -432,66 +530,138 @@ velocity_fig.update_layout(
 
     yaxis_title="Story Points",
 
+    xaxis_title="Sprint Weeks",
+
     legend=dict(
         orientation="h",
-        y=-0.2,
+        y=-0.22,
         x=0.5,
         xanchor="center"
+    ),
+
+    margin=dict(
+        l=40,
+        r=40,
+        t=70,
+        b=70
     )
+)
+
+# Keep Week order fixed
+velocity_fig.update_xaxes(
+
+    categoryorder="array",
+
+    categoryarray=week_labels
+
 )
 
 st.plotly_chart(
     velocity_fig,
     use_container_width=True
 )
-
 st.subheader("Sprint Burndown")
 
 burndown_fig = go.Figure()
 
-# Ideal burndown
-burndown_fig.add_trace(go.Scatter(
+sprint = st.selectbox(
+    "Select Sprint",
+    burndown_df["Sprint"].unique()
+)
 
-    x=df["Week"],
-    y=df["Planned Remaining"],
+burndown = burndown_df[
+    burndown_df["Sprint"] == sprint
+].copy()
 
-    mode='lines+markers+text',
+initial_effort = burndown["Remaining Effort (hrs)"].iloc[0]
 
-    name='Ideal Burndown',
+total_days = len(burndown) - 1
 
-    line=dict(color="#1E90FF"),
+burndown["Ideal Trend (hrs)"] = [
 
-    text=df["Planned Remaining"],
-    textposition="top center"
-))
+    round(
 
-# Actual burndown
-burndown_fig.add_trace(go.Scatter(
+        initial_effort -
 
-    x=df["Week"],
-    y=df["Actual Remaining"],
+        (initial_effort / total_days) * day,
 
-    mode='lines+markers+text',
+        1
 
-    name='Actual Burndown',
+    )
 
-    line=dict(color="#2E8B57"),
+    for day in range(len(burndown))
 
-    text=df["Actual Remaining"],
-    textposition="bottom center"
-))
+]
+
+burndown_fig.add_trace(
+
+    go.Scatter(
+
+        x=burndown["Day"],
+
+        y=burndown["Remaining Effort (hrs)"],
+
+        mode="lines+markers+text",
+
+        text=burndown["Remaining Effort (hrs)"],
+
+        textposition="top center",
+
+        name="Remaining Effort",
+
+        line=dict(
+            color="#1f77b4",
+            width=3
+        ),
+
+        marker=dict(size=9)
+
+    )
+
+)
+
+# Ideal Trend
+
+burndown_fig.add_trace(
+
+    go.Scatter(
+
+        x=burndown["Day"],
+
+        y=burndown["Ideal Trend (hrs)"],
+
+        mode="lines+markers+text",
+
+        text=burndown["Ideal Trend (hrs)"],
+
+        textposition="bottom center",
+
+        name="Ideal Trend",
+
+        line=dict(
+            color="#ff7f0e",
+            width=3,
+            dash="dash"
+        ),
+
+        marker=dict(size=9)
+
+    )
+
+)
 
 burndown_fig.update_layout(
 
     title=dict(
-        text="Sprint Burndown",
-        x=0.5,
-        xanchor="center"
+        text=f"{sprint} Burndown Chart",
+        x=0.5
     ),
 
-    height=420,
+    xaxis_title="Sprint Day",
 
-    yaxis_title="Remaining Work",
+    yaxis_title="Remaining Effort (Hours)",
+
+    height=500,
 
     legend=dict(
         orientation="h",
@@ -499,9 +669,22 @@ burndown_fig.update_layout(
         x=0.5,
         xanchor="center"
     )
+
 )
 
 st.plotly_chart(
     burndown_fig,
     use_container_width=True
+)
+
+st.subheader("Sprint Burndown Data")
+
+st.dataframe(
+
+    burndown,
+
+    use_container_width=True,
+
+    hide_index=True
+
 )
