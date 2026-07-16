@@ -1,7 +1,12 @@
 Week,Total Employees,Employees Left,Defects Detected,Defects Missed,Billable Hours,Total Hours,Completed Hours,Remaining Hours,Total Requirements,Total Requirements covered,Total requirements not covered,Defects QA,Defects UAT,Total Test Cases,Test Cases Executed,Test Cases Not Executed,Test Cases Resulting in Defect Detection,Test Cases with No Defects,Test Cases Designed,Effective Test Cases,Committed Story Points,Completed Story Points,Planned Remaining,Actual Remaining
+04-05-2026,1,0,1,0,40,40,40,0,3,3,0,1,0,44,44,0,1,43,44,43,40,40,0,0
+11-05-2026,1,0,1,0,40,40,40,0,2,2,0,1,0,26,26,0,1,25,26,25,34,34,0,0
+18-05-2026,1,0,4,0,40,40,40,0,7,7,0,1,0,120,120,0,7,113,120,113,40,40,0,0
+25-05-2026,1,0,4,0,40,40,40,0,4,4,0,4,0,46,46,0,4,42,46,46,40,40,0,0
 01-06-2026,1,0,2,0,32,32,32,0,2,2,0,2,0,26,26,0,2,24,26,26,34,34,0,0
 08-06-2026,1,0,1,0,40,40,40,0,2,2,0,1,0,24,24,0,1,23,24,24,29,29,0,0
 15-06-2026,1,0,1,0,40,40,40,0,1,1,0,1,0,12,12,0,1,11,12,12,21,21,0,0
 22-06-2026,1,0,3,0,40,40,40,0,3,3,0,3,0,32,32,0,3,29,32,32,39,39,0,0
 29-06-2026,1,0,1,0,40,40,40,0,4,4,0,1,0,50,50,0,1,49,50,50,39,39,0,0
 06-07-2026,1,0,1,0,40,40,40,0,3,3,0,1,0,64,64,0,1,63,64,64,40,40,0,0
+13-07-2026,1,0,2,0,40,40,40,40,2,2,0,2,0,26,26,0,2,24,26,24,29,29,0,0
