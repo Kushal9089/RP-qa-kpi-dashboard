@@ -1,4 +1,7 @@
 Week,Total Employees,Employees Left,Defects Detected,Defects Missed,Billable Hours,Total Hours,Completed Hours,Remaining Hours,Total Requirements,Total Requirements covered,Total requirements not covered,Defects QA,Defects UAT,Total Test Cases,Test Cases Executed,Test Cases Not Executed,Test Cases Resulting in Defect Detection,Test Cases with No Defects,Test Cases Designed,Effective Test Cases,Committed Story Points,Completed Story Points,Planned Remaining,Actual Remaining
+06-04-2026,1,0,2,0,40,40,40,0,1,1,0,2,0,24,24,0,2,22,24,22,21,21,0,0
+13-04-2026,1,0,3,0,40,40,40,0,1,1,0,3,0,34,34,0,3,31,34,3,34,34,0,0
+20-04-2026,1,0,1,0,40,40,40,0,2,2,0,1,0,36,36,0,1,35,36,35,29,29,0,0
 04-05-2026,1,0,1,0,40,40,40,0,3,3,0,1,0,44,44,0,1,43,44,43,40,40,0,0
 11-05-2026,1,0,1,0,40,40,40,0,2,2,0,1,0,26,26,0,1,25,26,25,34,34,0,0
 18-05-2026,1,0,4,0,40,40,40,0,7,7,0,1,0,120,120,0,7,113,120,113,40,40,0,0
